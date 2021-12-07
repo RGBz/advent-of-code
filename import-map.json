@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "/": "./src/",
+    "./": "./",
+    "deno/": "https://deno.land/std@0.114.0/",
+    "testing/": "https://deno.land/std@0.114.0/testing/",
+    "type-fest": "https://cdn.skypack.dev/type-fest?dts"
+  }
+}
