@@ -1,7 +1,7 @@
-import { countDepthIncreases } from "./countDepthIncreases.ts";
+import { countWindowedDepthIncreases } from "./countWindowedDepthIncreases.ts";
 
 console.log(
-  countDepthIncreases(
+  countWindowedDepthIncreases(
     new TextDecoder("utf8").decode(
       Deno.readFileSync("src/2021/01/input.txt"),
     )
