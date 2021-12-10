@@ -25,14 +25,42 @@ export function sort(array: number[]): number[] {
   return array.sort((a, b) => a - b);
 }
 
-export function test({ input, parts, expected }: {
+export function production({ day, parts }: {
+  day: number;
+  parts: ((input: string) => number)[];
+}) {
+  if (Deno.env.get("ENV") !== "production") {
+    return;
+  }
+  for (const part of parts) {
+    console.log(part.name, part(readInput(day)));
+  }
+}
+
+export function test({ day, input, parts, expected }: {
+  day: number;
   input: string;
   parts: ((input: string) => number)[];
   expected: [number, number];
 }) {
+  if (Deno.env.get("ENV") !== "test") {
+    return;
+  }
   for (let i = 0; i < parts.length; i++) {
-    Deno.test(`${parts[i].name} should give the correct result for the example`, () => {
+    try {
       assertEquals(parts[i](input), expected[i]);
-    });
+      console.log(
+        `${String(day).padStart(2, "0")}: ${
+          parts[i].name
+        } should give the correct result for the example: ✅`,
+      );
+    } catch (err) {
+      console.error(
+        `${String(day).padStart(2, "0")}: ${
+          parts[i].name
+        } should give the correct result for the example:`,
+      );
+      throw err;
+    }
   }
 }
