@@ -17,36 +17,33 @@ function part1(input: string): number {
 }
 
 function part2(input: string): number {
+  const mostCommonBit = (bitStrings: string[], index: number): "0" | "1" => {
+    return bitStrings.reduce(
+        (onesCount, bitString) =>
+          onesCount + (bitString[index] === "1" ? 1 : 0),
+        0,
+      ) < bitStrings.length / 2
+      ? "0"
+      : "1";
+  };
+
+  const leastCommonBit = (bitStrings: string[], index: number): "0" | "1" => {
+    return mostCommonBit(bitStrings, index) === "0" ? "1" : "0";
+  };
+
   const bitStrings = lines(input);
-  let oxygenRating = "", co2Rating = "";
-  let ofilter = mostCommonBit(bitStrings, 0);
-  let cfilter = leastCommonBit(bitStrings, 0);
-  for (let i = 1; i < bitStrings[0].length + 1; i++) {
-    const otoConsider = bitStrings.filter((str) => str.startsWith(ofilter));
-    const ctoConsider = bitStrings.filter((str) => str.startsWith(cfilter));
-    if (otoConsider.length === 1) {
-      oxygenRating = otoConsider[0];
-    }
-    if (ctoConsider.length === 1) {
-      co2Rating = ctoConsider[0];
-    }
-    ofilter += mostCommonBit(otoConsider, i);
-    cfilter += leastCommonBit(ctoConsider, i);
-  }
-  return product([oxygenRating, co2Rating], (s) => Number.parseInt(s, 2));
-}
 
-function mostCommonBit(bitStrings: string[], index: number): "0" | "1" {
-  return bitStrings.reduce(
-      (onesCount, bitString) => onesCount + (bitString[index] === "1" ? 1 : 0),
-      0,
-    ) < bitStrings.length / 2
-    ? "0"
-    : "1";
-}
-
-function leastCommonBit(bitStrings: string[], index: number): "0" | "1" {
-  return mostCommonBit(bitStrings, index) === "0" ? "1" : "0";
+  return product([mostCommonBit, leastCommonBit], (fn) => {
+    let filter = "";
+    for (let i = 0; i < bitStrings[0].length + 1; i++) {
+      const toConsider = bitStrings.filter((str) => str.startsWith(filter));
+      if (toConsider.length === 1) {
+        return Number.parseInt(toConsider[0], 2);
+      }
+      filter += fn(toConsider, i);
+    }
+    return 0;
+  });
 }
 
 run({
