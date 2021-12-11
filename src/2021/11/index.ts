@@ -1,5 +1,4 @@
-import { Grid, lines, product, run } from "../util.ts";
-
+import { Grid, run } from "../util.ts";
 
 export function part1(input: string): number {
   let flashes = 0;
@@ -12,7 +11,7 @@ export function part1(input: string): number {
     // Tackle the flashing
     let flashed = [...grid.filter(({ value }) => value > 9)];
     const flashedThisStep = new Set(flashed.map(({ x, y }) => `${x},${y}`));
-    while(flashed.length) {
+    while (flashed.length) {
       flashes += flashed.length;
       const nextFlashed = [];
       for (const f of flashed) {
@@ -44,7 +43,7 @@ export function part2(input: string): number {
     // Tackle the flashing
     let flashed = [...grid.filter(({ value }) => value > 9)];
     const flashedThisStep = new Set(flashed.map(({ x, y }) => `${x},${y}`));
-    while(flashed.length) {
+    while (flashed.length) {
       const nextFlashed = [];
       for (const f of flashed) {
         for (const a of grid.getAdjacent(f.x, f.y)) {

@@ -1,6 +1,4 @@
-import { lines, production, test } from "../util.ts";
-
-const day = 2;
+import { lines, run } from "../util.ts";
 
 export function part1(input: string): number {
   let horizontal = 0, depth = 0;
@@ -41,10 +39,8 @@ export function part2(input: string): number {
   return horizontal * depth;
 }
 
-production({ day, parts: [part1, part2] });
-
-test({
-  day,
+run({
+  day: 2,
   input: `forward 5
 down 5
 forward 8

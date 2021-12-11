@@ -1,6 +1,4 @@
-import { production, sum, test } from "../util.ts";
-
-const day = 1;
+import { run, sum } from "../util.ts";
 
 export function part1(input: string): number {
   const depths = input.split("\n").map(Number);
@@ -31,10 +29,8 @@ export function part2(input: string): number {
   return count;
 }
 
-production({ day, parts: [part1, part2] });
-
-test({
-  day,
+run({
+  day: 1,
   input: `199
 200
 208
