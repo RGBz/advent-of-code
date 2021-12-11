@@ -21,7 +21,7 @@ function part2(input: string): number {
   let oxygenRating = "", co2Rating = "";
   let ofilter = mostCommonBit(bitStrings, 0);
   let cfilter = leastCommonBit(bitStrings, 0);
-  for (let i = 0; i < bitStrings[0].length + 1; i++) {
+  for (let i = 1; i < bitStrings[0].length + 1; i++) {
     const otoConsider = bitStrings.filter((str) => str.startsWith(ofilter));
     const ctoConsider = bitStrings.filter((str) => str.startsWith(cfilter));
     if (otoConsider.length === 1) {
