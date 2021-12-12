@@ -25,21 +25,21 @@ export function sort(array: number[]): number[] {
   return array.sort((a, b) => a - b);
 }
 
-export function run(input: {
+export function run(params: {
   day: number;
   input: string;
   parts: ((input: string) => number)[];
   expected: [number, number];
 }) {
-  return Deno.env.get("ENV") === "test" ? test(input) : production(input);
+  return Deno.env.get("ENV") === "test" ? test(params) : production(params);
 }
 
 function production({ day, parts }: {
   day: number;
   parts: ((input: string) => number)[];
 }) {
-  for (const part of parts) {
-    console.log(part.name, part(readInput(day)));
+  for (let i = 0; i < parts.length; i++) {
+    console.log(`PART${i + 1}`, parts[i](readInput(day)));
   }
 }
 
@@ -56,14 +56,14 @@ function test({ day, input, parts, expected }: {
     try {
       assertEquals(parts[i](input), expected[i]);
       console.log(
-        `${String(day).padStart(2, "0")}: ${
-          parts[i].name
+        `${String(day).padStart(2, "0")}: PART${
+          i + 1
         } should give the correct result for the example: ✅`,
       );
     } catch (err) {
       console.error(
-        `${String(day).padStart(2, "0")}: ${
-          parts[i].name
+        `${String(day).padStart(2, "0")}: PART${
+          i + 1
         } should give the correct result for the example:`,
       );
       throw err;
